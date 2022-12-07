@@ -9,6 +9,7 @@
    
   </div>
   <TheFooter />
+  
 </template>
 
 <script>

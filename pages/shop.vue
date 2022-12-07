@@ -5,7 +5,6 @@
         <div
           class="col-12 d-flex justify-content-center quote-block row m-0 p-0"
         >
-          <!-- Items -->
           <div
             class="
               mt-5
@@ -19,7 +18,7 @@
               justify-content-between
               align-items-start
             "
-            v-for="(item, index) in shopItems"
+            v-for="(item, index) in data.results"
             :key="index"
           >
             <ShopVideoItem :item="item" />
@@ -29,39 +28,12 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      shopItems: [],
-    };
-  },
-  methods: {
-    getContent() {
-      this.$prismic.client
-        .query(this.$prismic.predicate.at("document.type", "shop_item"))
-        .then((response) => {
-          this.shopItems = response.results;
-
-          this.initSnipcart();
-        });
-    },
-
-    initSnipcart() {
-      document.addEventListener("snipcart.ready", () => {
-        window.Snipcart.events.on("cart.confirmed", () => {
-          console.log("confirmed");
-        });
-      });
-    },
-  },
-
-  mounted() {
-    this.getContent();
-  },
-};
+<script setup >
+const { client } = usePrismic();
+const { data: data } = await useAsyncData("data", () =>
+  client.getByType("shop_item")
+);
 </script>
-
 <style scoped>
 .call-to-action-title {
   text-decoration: none;

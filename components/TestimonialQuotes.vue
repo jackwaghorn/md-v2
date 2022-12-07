@@ -1,5 +1,6 @@
 <template>
   <div data-aos="fade" class="col-12 pt-5 pb-5 mt-5 white">
+ 
     <div
       :class="[
         checkIndex(index) ? 'justify-content-start' : 'justify-content-end',
@@ -8,11 +9,11 @@
     >
       <div class="col-12 col-md-12 col-lg-7 p-0">
         <figure class="mb-0">
-          <p>
+         
             <span class="quotation-mark-open">“</span>
             <span class="quotation-mark-close">”</span>
-            <prismic-rich-text :field="item.primary.quote" class="" />
-          </p>
+            <prismic-rich-text :field="item.primary.quote" />
+          
 
           <figcaption class="blockquote-footer mb-0 mt-1">
             {{ item.primary.credit }}
@@ -24,10 +25,9 @@
 </template>
 <script>
 export default {
- 
   props: {
     item: Object,
-    index: Number
+    index: Number,
   },
   methods: {
     checkIndex(e) {
@@ -66,7 +66,6 @@ export default {
 figure {
   position: relative;
 }
-
 
 section {
   color: #302721;

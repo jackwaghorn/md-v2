@@ -1,14 +1,22 @@
 <template>
   <div class="pb-4">
     <div class="row m-0 p-0 justify-content-evenly py-5">
-      <div data-aos="fade" class="col-12 mb-3 text-center">
-        <div class="col-12 mb-5">
+      <div
+        data-aos="fade"
+        class="
+          col-12
+          mb-3
+          text-center
+          d-flex
+          justify-content-center
+          flex-column
+        "
+      >
+        <div class="col-12 mb-5 text-center">
           <h2 v-if="isTitle">{{ item.primary.title[0].text }}</h2>
         </div>
-        <div class="col-12 row d-flex justify-content-center">
-          <p class="col-12 col-md-8">
-            <prismic-rich-text :field="item.primary.body_of_text" class="" />
-          </p>
+        <div class="col-12 text-center d-flex justify-content-center">
+          <prismic-rich-text :field="item.primary.body_of_text" />
         </div>
       </div>
       <div
@@ -57,10 +65,7 @@
   </div>
 </template>
 <script>
-
-
 export default {
-
   props: {
     item: Object,
     index: Number,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container-fluid p-0">
-      <section class="loop" v-for="(item, index) in data" :key="item">
+      <section class="loop" v-for="(item, index) in data.data.body" :key="item">
         <component
           :is="componentMapper[item.slice_type]"
           v-bind="{ item: item, index: index }"
@@ -10,40 +10,20 @@
     </div>
   </div>
 </template>
-<script>
-import AboutBio from "~/components/AboutBio.vue";
-import CertificateAndText from "~/components/CertificateAndText.vue";
-import ContactSection from "~/components/ContactSection.vue";
 
-export default {
-  components: {
-    AboutBio,
-    CertificateAndText,
-    ContactSection,
-  },
+<script setup >
+import text_box from "~/components/AboutBio.vue";
+import certificate_and_text from "~/components/CertificateAndText.vue";
+import contact from "~/components/ContactSection.vue";
 
-  data() {
-    return {
-      data: "",
-      contactData: [],
-      componentMapper: {
-        text_box: "AboutBio",
-        certificate_and_text: "CertificateAndText",
-        contact: "ContactSection",
-      },
-    };
-  },
-  methods: {
-    getContent() {
-      this.$prismic.client.getSingle("about_page").then((response) => {
-        this.data = response.data.body;
-      });
-    },
-  },
-
-  mounted() {
-    this.getContent();
-  },
+const { client } = usePrismic();
+const { data: data } = await useAsyncData("data", () =>
+  client.getSingle("about_page")
+);
+const componentMapper = {
+  text_box,
+  certificate_and_text,
+  contact,
 };
 </script>
 

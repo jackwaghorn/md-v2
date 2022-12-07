@@ -1,89 +1,5 @@
 <template>
   <div class="container-fluid p-0 position-relative">
-    <!-- <Particles
-      id="tsparticles"
-      :options="{
-        fullScreen: {
-          enable: false,
-          zIndex: -1,
-        },
-        background: {
-          color: {
-            value: 'transparent',
-          },
-        },
-        fpsLimit: 30,
-        interactivity: {
-          events: {
-            onClick: {
-              enable: false,
-              mode: 'push',
-            },
-            onHover: {
-              enable: false,
-              mode: 'repulse',
-            },
-            resize: true,
-          },
-        },
-        particles: {
-          color: {
-            value: '#e6e6e6',
-          },
-          rotate: {
-            value: 0,
-            random: true,
-            direction: 'clockwise',
-            animation: {
-              enable: true,
-              speed: 2,
-              sync: false,
-            },
-          },
-          move: {
-            direction: 'none',
-            enable: true,
-            outMode: 'bounce',
-            random: false,
-            speed: 0.3,
-            straight: false,
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 800,
-            },
-            value: 8,
-          },
-
-          shape: {
-            type: ['image'],
-
-            options: {
-              image: [
-                {
-                  src: star,
-                  width: 20,
-                  height: 20,
-                  particles: {
-                    size: {
-                      value: 6,
-                    },
-                  },
-                },
-              ],
-            },
-          },
-
-          size: {
-            random: true,
-            value: 6,
-          },
-        },
-        detectRetina: true,
-      }"
-    /> -->
-
     <div
       class="
         row
@@ -158,26 +74,24 @@
         </div>
       </div>
     </div>
+
     <section
       class="loop lazy position-relative"
-      v-for="(item, index) in homeData"
-      :key="item"
+      v-for="(item, index) in data.data.body"
+      :key="index"
     >
-      <component
+      <!-- <component
         v-if="item.slice_type === 'testimonials'"
         :is="componentMapper[item.slice_type]"
-        v-bind="{ item: testData, index: index }"
-      ></component>
+        v-bind="{ item: test.data, index: index }"
+      ></component> -->
       <component
-        v-else
         :is="componentMapper[item.slice_type]"
         v-bind="{ item: item, index: index }"
       ></component>
     </section>
-  </div>
-</template>
 
-<script>
+    <!--
 import TextImage from "~/components/TextImage.vue";
 import ListText from "~/components/ListText.vue";
 import QuoteSlice from "~/components/QuoteSlice.vue";
@@ -282,11 +196,82 @@ components: {
     this.sparkling();
   },
 };
+ -->
+  </div>
+</template>
+
+
+<script setup>
+import text_box from "~/components/TextImage.vue";
+import list from "~/components/ListText.vue";
+import testimonials from "~/components/QuoteSlice.vue";
+import cards from "~/components/CardSlice.vue";
+import large_centred_text from "~/components/CallToAction.vue";
+
+const { client } = usePrismic();
+const { data: data } = await useAsyncData("data", () =>
+  client.getSingle("home_page")
+);
+const star = "/icons/star-full.svg";
+const color = "#fff";
+const svgPath =
+  "M26.5 25.5C19.0043 33.3697 0 34 0 34C0 34 19.1013 35.3684 26.5 43.5C33.234 50.901 34 68 34 68C34 68 36.9884 50.7065 44.5 43.5C51.6431 36.647 68 34 68 34C68 34 51.6947 32.0939 44.5 25.5C36.5605 18.2235 34 0 34 0C34 0 33.6591 17.9837 26.5 25.5Z";
+
+function sparkling() {
+  let sparklingElement = document.getElementsByClassName("sparkling")[0];
+  let stars = sparklingElement.getElementsByClassName("star");
+ 
+
+  if (stars.length > 5) {
+    Array.prototype.forEach.call(stars, function (el, index) {
+      if (index === 0) {
+        el.remove();
+      }
+    });
+  }
+  // add a new star
+  sparklingElement.append(addStar());
+  let rand = Math.round(Math.random() * 1500) + 100;
+
+  setTimeout(sparkling(), rand);
+}
+function addStar() {
+  let size = Math.floor(Math.random() * 20) + 10;
+  let top = Math.floor(Math.random() * 100);
+  let left = Math.floor(Math.random() * 100);
+  var p = document.createElement("span");
+  p.classList.add("star");
+  p.style.top = top + "%";
+  p.style.left = left + "%";
+
+  p.innerHTML =
+    '<svg width="' +
+    size +
+    '" height="' +
+    size +
+    '" viewBox="0 0 68 68" fill="none">' +
+    '<path d="' +
+    svgPath +
+    '" fill="' +
+    color +
+    '" /></svg>';
+  return p;
+}
+// onMounted(() => {
+//   sparkling();
+// });
+const componentMapper = {
+  text_box,
+  list,
+  testimonials,
+  cards,
+  large_centred_text,
+};
 </script>
 
 
 <style lang="scss" scoped>
-@-webkit-keyframes rotating /* Safari and Chrome */ {
+@-webkit-keyframes rotating {
   from {
     -webkit-transform: rotate(0deg);
     -o-transform: rotate(0deg);

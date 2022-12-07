@@ -28,9 +28,9 @@
 
           <div class="col-12"></div>
 
-          <p class="">
+        
             <prismic-rich-text :field="item.primary.contact_infomation" />
-          </p>
+        
         </div>
       </div>
       <div class="col-12 col-md-8 col-lg-6">

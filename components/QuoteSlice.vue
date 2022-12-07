@@ -3,12 +3,15 @@
     <div class="col-12 col-md-7 d-flex align-items-center p-3">
       <swiper
         data-aos="fade-right"
-        :autoplay="autoplay"
+        :autoplay="{
+          delay: 8000,
+          disableOnInteraction: true,
+        }"
         :loop="true"
         :pagination="true"
       >
         <swiper-slide
-          v-for="(slide, index) in quotesOnly"
+          v-for="(slide, index) in item.items"
           :key="index"
           class="row d-flex justify-content-center align-items-center m-0"
         >
@@ -17,17 +20,17 @@
               col-md-12 col-lg-10
               align-self-center
               quote-content
-              my-5 my-md-3 my-lg-5
+              my-5 my-md-5 my-lg-5
             "
           >
             <figure>
               <span class="quotation-mark-open">“</span>
               <span class="quotation-mark-close">”</span>
-              <p v-snip="{ lines: 10 }">
-                <prismic-rich-text :field="slide.primary.quote" class="" />
-              </p>
+
+              <prismic-rich-text v-snip="{ lines: 9 }" :field="slide.quote" />
+
               <figcaption class="blockquote-footer mt-2">
-                {{ slide.primary.credit }}
+                {{ slide.credited_to[0].text }}
               </figcaption>
             </figure>
           </div>
@@ -57,43 +60,20 @@
       >
         <img
           class="img-fluid m-0 p-3 p-md-0"
-          :src="item.homepage_image.url"
+          :src="item.primary.image.url"
           alt=""
         />
       </div>
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  name: "QuoteSlice",
-  props: {
-    item: Object,
-  },
-  data() {
-    return {
-      autoplay: {
-        delay: 8000,
-        disableOnInteraction: true,
-      },
-    };
-  },
-  computed: {
-    quotesOnly() {
-      const quotes = this.item.body.filter((item) => {
-        return !item.primary.video_embed;
-      });
-      return quotes;
-    },
-  },
-};
+const props = defineProps({
+  item: Object,
+});
 </script>
 
 <style lang="scss" >

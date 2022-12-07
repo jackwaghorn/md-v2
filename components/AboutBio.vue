@@ -21,18 +21,36 @@
           poop
         "
       >
-        <div class="col-sm-7 col-12 col-md-4 p-0 d-flex justify-content-center order-2 order-sm-1">
+        <div
+          class="
+            col-sm-7 col-12 col-md-4
+            p-0
+            d-flex
+            justify-content-center
+            order-2 order-sm-1
+          "
+        >
           <div class="col-12 col-md-10">
-          <img class="img-fluid p-3 p-md-0" :src="item.primary.image.url" alt="" /></div>
-        </div>
-        <div class="col-12 col-md-8 mb-3 mb-md-0 px-1 px-md-3 d-flex justify-content-center row order-1 order-sm-2">
-          <div class="col-12 col-md-11">
-          <p>
-            <prismic-rich-text
-              :field="item.primary.text_box"
-              class="px-2 px-sm-0"
+            <img
+              class="img-fluid p-3 p-md-0"
+              :src="item.primary.image.url"
+              alt=""
             />
-          </p>
+          </div>
+        </div>
+        <div
+          class="
+            col-12 col-md-8
+            mb-3 mb-md-0
+            px-1 px-md-3
+            d-flex
+            justify-content-center
+            row
+            order-1 order-sm-2
+          "
+        >
+          <div class="col-12 col-md-11">
+            <prismic-rich-text :field="item.primary.text_box" />
           </div>
         </div>
       </div>
@@ -42,7 +60,6 @@
 
 <script>
 export default {
-
   props: {
     item: Object,
   },
