@@ -2,7 +2,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   if (typeof window !== "undefined") {
     window.SnipcartSettings = {
       publicApiKey:
-        'MzFkMmQxZmUtMTdkNy00ZTYzLTk0ODMtOTJmN2YxMWUwMGVkNjM4MDU0Mjk5Mzg4NDMzMTk3',
+        'YjFlNTYzMDctMmQ1NS00YzY5LWEwOTctODkxNzk2NzBmZTAzNjM4MDU0Mjk5Mzg4NDMzMTk3',
       loadStrategy: 'on-user-interaction'
     }
     ;(() => {
