@@ -1,23 +1,24 @@
 <template>
   <div class="my-container">
+   
     <transition name="route" mode="out-in">
       <NavBar />
     </transition>
 
-     
     <NuxtPage />
-   
   </div>
   <TheFooter />
-  
 </template>
 
-<script>
-export default {
-  data() {
-    return {};
-  },
-};
+<script setup>
+useHead({
+  title: 'Molly Dooner',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  charset: 'utf-8',
+  meta: [{ name: 'description', content: 'Molly Dooner is a certified life coach and Tarot reader who specialises in transformation, empowerment and awakening authenticity.' }],
+  link: [{ rel: 'icon', type: 'image/ico', href: '/favicon.ico' }],
+})
+
 </script>
 
 <style lang="scss">

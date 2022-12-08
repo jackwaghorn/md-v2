@@ -80,123 +80,11 @@
       v-for="(item, index) in data.data.body"
       :key="index"
     >
-      <!-- <component
-        v-if="item.slice_type === 'testimonials'"
-        :is="componentMapper[item.slice_type]"
-        v-bind="{ item: test.data, index: index }"
-      ></component> -->
       <component
         :is="componentMapper[item.slice_type]"
         v-bind="{ item: item, index: index }"
       ></component>
     </section>
-
-    <!--
-import TextImage from "~/components/TextImage.vue";
-import ListText from "~/components/ListText.vue";
-import QuoteSlice from "~/components/QuoteSlice.vue";
-import CardSlice from "~/components/CardSlice.vue";
-import CallToAction from "~/components/CallToAction.vue";
-
-export default {
-components: {
-    TextImage,
-    ListText,
-    QuoteSlice,
-    CardSlice,
-    CallToAction
-  },
-
-  data() {
-    return {
-      homeData: "",
-      testData: [],
-
-      star: "/icons/star-full.svg",
-      componentMapper: {
-        text_box: "TextImage",
-        list: "ListText",
-        testimonials: "QuoteSlice",
-        cards: "CardSlice",
-        large_centred_text: "CallToAction",
-      },
-      color: "#fff",
-      svgPath:
-        "M26.5 25.5C19.0043 33.3697 0 34 0 34C0 34 19.1013 35.3684 26.5 43.5C33.234 50.901 34 68 34 68C34 68 36.9884 50.7065 44.5 43.5C51.6431 36.647 68 34 68 34C68 34 51.6947 32.0939 44.5 25.5C36.5605 18.2235 34 0 34 0C34 0 33.6591 17.9837 26.5 25.5Z",
-    };
-  },
-  methods: {
-    getContent() {
-      this.$prismic.client
-        .get({
-          predicates: [
-            this.$prismic.predicate.any("document.type", [
-              "home_page",
-              "testimonials",
-            ]),
-          ],
-        })
-        .then((response) => {
-          this.homeData = response.results.find(
-            (x) => x.type === "home_page"
-          ).data.body;
-
-          this.testData = response.results.find(
-            (x) => x.type === "testimonials"
-          ).data;
-        });
-    },
-
-    sparkling() {
-      let sparklingElement = document.getElementsByClassName("sparkling")[0];
-
-      let stars = sparklingElement.getElementsByClassName("star");
-
-      // remove the first star when more than 6 stars existing
-      if (stars.length > 5) {
-        Array.prototype.forEach.call(stars, function (el, index) {
-          if (index === 0) {
-            el.remove();
-          }
-        });
-      }
-      // add a new star
-      sparklingElement.append(this.addStar());
-
-      let rand = Math.round(Math.random() * 1500) + 100;
-
-      setTimeout(this.sparkling, rand);
-    },
-    addStar() {
-      let size = Math.floor(Math.random() * 20) + 10;
-      let top = Math.floor(Math.random() * 100);
-      let left = Math.floor(Math.random() * 100);
-      var p = document.createElement("span");
-      p.classList.add("star");
-      p.style.top = top + "%";
-      p.style.left = left + "%";
-
-      p.innerHTML =
-        '<svg width="' +
-        size +
-        '" height="' +
-        size +
-        '" viewBox="0 0 68 68" fill="none">' +
-        '<path d="' +
-        this.svgPath +
-        '" fill="' +
-        this.color +
-        '" /></svg>';
-      return p;
-    },
-  },
-
-  mounted() {
-    this.getContent();
-    this.sparkling();
-  },
-};
- -->
   </div>
 </template>
 
@@ -212,15 +100,29 @@ const { client } = usePrismic();
 const { data: data } = await useAsyncData("data", () =>
   client.getSingle("home_page")
 );
-const star = "/icons/star-full.svg";
-const color = "#fff";
-const svgPath =
-  "M26.5 25.5C19.0043 33.3697 0 34 0 34C0 34 19.1013 35.3684 26.5 43.5C33.234 50.901 34 68 34 68C34 68 36.9884 50.7065 44.5 43.5C51.6431 36.647 68 34 68 34C68 34 51.6947 32.0939 44.5 25.5C36.5605 18.2235 34 0 34 0C34 0 33.6591 17.9837 26.5 25.5Z";
+
+function addStar() {
+  let size = Math.floor(Math.random() * 20) + 10;
+  let top = Math.floor(Math.random() * 100);
+  let left = Math.floor(Math.random() * 100);
+  var p = document.createElement("span");
+  p.classList.add("star");
+  p.style.top = top + "%";
+  p.style.left = left + "%";
+  p.innerHTML =
+    '<svg width="' +
+    size +
+    '" height="' +
+    size +
+    '" viewBox="0 0 68 68" fill="none">' +
+    '<path d="M26.5 25.5C19.0043 33.3697 0 34 0 34C0 34 19.1013 35.3684 26.5 43.5C33.234 50.901 34 68 34 68C34 68 36.9884 50.7065 44.5 43.5C51.6431 36.647 68 34 68 34C68 34 51.6947 32.0939 44.5 25.5C36.5605 18.2235 34 0 34 0C34 0 33.6591 17.9837 26.5 25.5Z" fill="#fff" /></svg>';
+  return p;
+}
 
 function sparkling() {
   let sparklingElement = document.getElementsByClassName("sparkling")[0];
+
   let stars = sparklingElement.getElementsByClassName("star");
- 
 
   if (stars.length > 5) {
     Array.prototype.forEach.call(stars, function (el, index) {
@@ -235,31 +137,8 @@ function sparkling() {
 
   setTimeout(sparkling(), rand);
 }
-function addStar() {
-  let size = Math.floor(Math.random() * 20) + 10;
-  let top = Math.floor(Math.random() * 100);
-  let left = Math.floor(Math.random() * 100);
-  var p = document.createElement("span");
-  p.classList.add("star");
-  p.style.top = top + "%";
-  p.style.left = left + "%";
 
-  p.innerHTML =
-    '<svg width="' +
-    size +
-    '" height="' +
-    size +
-    '" viewBox="0 0 68 68" fill="none">' +
-    '<path d="' +
-    svgPath +
-    '" fill="' +
-    color +
-    '" /></svg>';
-  return p;
-}
-// onMounted(() => {
-//   sparkling();
-// });
+
 const componentMapper = {
   text_box,
   list,
