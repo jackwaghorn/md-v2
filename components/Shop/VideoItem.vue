@@ -1,7 +1,7 @@
 <template>
   <!-- Video -->
-  <div class="col-md-6 col-12 py-0 mb-3">
-    <div class="plyr__video-embed js-player">
+  <div class="col-md-6 col-12 py-0 mb-3 row d-flex justify-content-center">
+    <div class="col-12 plyr__video-embed js-player">
       <iframe
         :src="
           'https://www.youtube.com/embed/' +
@@ -13,27 +13,30 @@
         allow="autoplay"
       ></iframe>
     </div>
+    <div class="col-8 p-0 mt-5">
+      <img class="img-fluid" :src="item.primary.image.url" alt="" />
+    </div>
   </div>
   <div class="col-md-6 col-12 row d-flex align-items-baseline gy-4 mt-0">
     <div class="col-12 m-0">
-      <h2>{{ item.data.product_name[0].text }}</h2>
+      <h2>{{ item.primary.item_title }}</h2>
     </div>
     <div class="col-12">
-      <prismic-rich-text :field="item.data.product_description" />
+      <prismic-rich-text :field="item.primary.item_description" />
       <small class="product-type"
         >Digital product: You will receive a private video link via email</small
       >
     </div>
     <div class="col-12 my-3">
-      <h4>£{{ item.data.product_price }}</h4>
+      <h4>£{{ item.primary.price }}</h4>
     </div>
     <div class="col-12 m-0">
       <button
-        :data-item-name="item.data.product_name[0].text"
+        :data-item-name="item.primary.item_title"
         :data-item-id="item.id"
-        :data-item-price="item.data.product_price"
-        :data-item-image="item.data.sample_video_embed.thumbnail_url"
-        :data-item-file-guid="item.data.snipcart_digital_good_guid"
+        :data-item-price="item.primary.price"
+        :data-item-image="item.primary.video_embed.thumbnail_url"
+        :data-item-file-guid="item.primary.snipcart_digital_good_guid"
         :data-item-shippable="false"
         data-item-url="https://www.mollydooner.com/shop"
         data-item-custom1-name="Url-1"
@@ -59,51 +62,43 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
-export default {
-  props: {
-    item: Object,
-    index: Number,
-  },
-  data() {
-    return {};
-  },
 
-  computed: {
-    youtubeId() {
-      let regExp =
-        /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-      let match = this.item.data.sample_video_embed.embed_url.match(regExp);
-      return match && match[7].length == 11 ? match[7] : false;
-    },
-    videoLinks() {
-      return Array.from(this.item.data.video_links).map((link) => {
-        return link.full_video_link.url;
-      });
-    },
-  },
-  mounted() {
-    const players = Array.from(document.querySelectorAll(".js-player")).map(
-      (p) =>
-        new Plyr(p, {
-          controls: [
-            "play-large",
-            "play",
-            "progress",
-            "current-time",
-            "fullscreen",
-          ],
-          fullscreen: {
-            enabled: true,
-          },
-        })
-    );
+const props = defineProps(["item", "index"]);
 
-    window.player = players;
-  },
-};
+const youtubeId = computed(() => {
+  let regExp =
+    /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  let match = props.item.primary.video_embed.embed_url.match(regExp);
+  return match && match[7].length == 11 ? match[7] : false;
+});
+const videoLinks = computed(() => {
+  return Array.from(props.item.items).map((link) => {
+    return link.full_video_links.url;
+  });
+});
+
+onMounted(() => {
+  const players = Array.from(document.querySelectorAll(".js-player")).map(
+    (p) =>
+      new Plyr(p, {
+        controls: [
+          "play-large",
+          "play",
+          "progress",
+          "current-time",
+          "fullscreen",
+        ],
+        fullscreen: {
+          enabled: true,
+        },
+      })
+  );
+
+  window.player = players;
+});
 </script>
 <style scoped>
 .product-type {

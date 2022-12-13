@@ -8,7 +8,7 @@
 
     <div
       data-aos="fade-in"
-      class="col-12 col-md-8 d-flex align-items-center order-md-2 my-0 mb-md-0 mb-4 my-md-3"
+      class="col-12 col-md-7 d-flex align-items-center order-md-2 my-0 mb-md-0 mb-4 my-md-3"
     >
       <div class="row justify-content-center m-0  mx-md-0 p-0">
         <div class="col-lg-10 col-md-12 col-12">
@@ -26,7 +26,7 @@
 
     <div
       class="
-        col-12 col-sm-8 col-md-3
+        col-12 col-sm-8 col-md-4
         order-md-1
         d-flex
         justify-content-center
@@ -35,7 +35,7 @@
       "
     >
       <div
-        class="col-12 col-md-12 col-lg-8 d-flex m-0 p-0 justify-content-center align-items-center"
+        class="col-12 col-md-12 d-flex m-0 p-0 justify-content-center align-items-center"
       >
         <img  data-aos="fade-in" class="img-fluid m-0 p-3 p-md-0" :src="item.primary.image.url" alt="" />
       </div>

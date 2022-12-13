@@ -18,10 +18,12 @@
               justify-content-between
               align-items-start
             "
-            v-for="(item, index) in data.results"
+            v-for="(item, index) in data.data.body"
             :key="index"
           >
+        
             <ShopVideoItem :item="item" />
+          
           </div>
         </div>
       </div>
@@ -31,7 +33,7 @@
 <script setup >
 const { client } = usePrismic();
 const { data: data } = await useAsyncData("data", () =>
-  client.getByType("shop_item")
+  client.getSingle("shop")
 );
 </script>
 <style scoped>
