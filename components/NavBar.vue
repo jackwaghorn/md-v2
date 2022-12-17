@@ -66,7 +66,7 @@
             <div class="col-auto">
               <a
                 target="_blank"
-                href="https://www.instagram.com/mollyelizabethdooner/"
+                href="https://www.instagram.com/mollydooner_/"
               >
                 <img
                   class="insta-logo"
@@ -125,7 +125,7 @@
         <div class="mt-4">
           <a
             target="_blank"
-            href="https://www.instagram.com/mollyelizabethdooner/"
+            href="https://www.instagram.com/mollydooner_/"
           >
             <img style="width: 30px" src="/images/instagram.svg" alt=""
           /></a>
