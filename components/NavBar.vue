@@ -48,9 +48,9 @@
             <nuxt-link tag="div" class="col" to="/about"
               ><small class="link">About</small></nuxt-link
             >
-            <nuxt-link tag="div" class="col" to="/shop"
+            <!-- <nuxt-link tag="div" class="col" to="/shop"
               ><small class="link">Shop</small></nuxt-link
-            >
+            > -->
 
             <nuxt-link tag="div" class="col d-lg-block d-none" to="/book"
               ><small class="link">Work With Me</small></nuxt-link
@@ -74,13 +74,13 @@
                   alt=""
               /></a>
             </div>
-            <div class="col-auto">
+            <!-- <div class="col-auto">
               <img
                 class="shopping-cart snipcart-checkout"
                 src="/images/cart.svg"
                 alt=""
               />
-            </div>
+            </div> -->
             <nuxt-link
               tag="div"
               class="contact-link col"
@@ -106,7 +106,7 @@
         class="navbar-mobile d-flex flex-column justify-content-center"
       >
         <nuxt-link tag="div" class="my-2" to="/about"><h2>About</h2></nuxt-link>
-        <nuxt-link tag="div" class="my-2" to="/shop"><h2>Shop</h2></nuxt-link>
+        <!-- <nuxt-link tag="div" class="my-2" to="/shop"><h2>Shop</h2></nuxt-link> -->
         <nuxt-link tag="div" class="my-2" to="/book"
           ><h2>Work With Me</h2></nuxt-link
         >
